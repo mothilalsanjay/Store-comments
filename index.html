@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="google.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>MSY STORE</title>
+    <link rel="icon" href="./LOGO.png" type="image/icon type">
+</head>
+<body class="body">
+    <center style="display: flex; justify-content:space-around;">
+        <div class="mainblock">
+            <div class="left">
+                
+                <h1 class="heading">Get in <span style="color: aqua;">Touch</span></h1>
+                
+                <img src="./LOGO.png" alt="logo" style="height: 70px; border-radius: 50%; ">
+                <p class="lo">Thanks for coming to our shop. I hope you had a good experience. Kindly post your comments and thoughts for our growth.</p>
+                <input type="text" placeholder="Contact name" class="input1" id="name" />
+                <input type="text" placeholder="street" class="input1" />
+                <input type="text" placeholder="city" class="input2" />
+                <input type="number" placeholder="postcode" class="input2" />
+                <input type="number" placeholder="+91 contact number" class="input1" />
+                <input type="text" placeholder="email id" class="input1" />
+                <input type="text" placeholder="Let's talk about your idea" class="input1" id="comment" />
+                <div class="check">
+                    <input type="checkbox" />
+                    <p style="color: brown;">I want to protect my data by signing an NDA</p>
+                </div>
+                <button class="submit" onclick="storeComment()" type="button">SUBMIT</button>
+                <div class="socialmedia">
+                    <div class="social">
+                        <img src="/phone.png" alt="phone" width="40" height="40" class="phone">
+                        <div class="data">
+                            <p>phone</p>
+                            <p>04234-235689</p>
+                        </div>
+                    </div>
+                    <div class="social">
+                        <img src="/email.png" alt="email" width="40" height="40" class="phone">
+                        <div class="data">
+                            <p>email</p>
+                            <p>msmm2705@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="social">
+                        <img src="/help.png" alt="help" width="40" height="40" class="phone">
+                        <div class="data">
+                            <p>helpdesk</p>
+                            <p>helpdesk@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d979.2461247782874!2d78.06374906950359!3d10.964542315948187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baa2fb62100926b%3A0xce1822eaf1fbe1db!2sVMP%20tex!5e0!3m2!1sen!2sin!4v1712477807513!5m2!1sen!2sin" width="450" height="800" style="border:0;" allowfullscreen="" loading="lazy" class="margin"></iframe>
+            </div>
+        </div>
+        <div class="comment">
+            <h3>Saved Comments:</h3>
+            <ul id="commentList"></ul>
+        </div>
+    </center>
+    
+    <script>
+        // Function to store comment in local storage
+        function storeComment() {
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+
+            if (name && comment) {
+                // Store the name and comment as an object
+                let comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push({ name: name, comment: comment });
+                localStorage.setItem('comments', JSON.stringify(comments));
+
+                displayComments();
+                document.getElementById('name').value = '';
+                document.getElementById('comment').value = ''; // Clear the fields
+            } else {
+                alert('Please enter both name and comment.');
+            }
+        }
+
+        // Function to display saved comments
+        function displayComments() {
+            const commentList = document.getElementById('commentList');
+            commentList.innerHTML = '';  // Clear the current list
+            let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            
+            comments.forEach((entry, index) => {
+                commentList.innerHTML += `<li>
+                    <strong>Name : ${entry.name}</strong>
+                    <p>Comments : ${entry.comment}</p>
+                    </li>`;
+            });
+        }
+
+        // Display comments on page load
+        window.onload = function() {
+            displayComments();
+        }
+    </script>
+</body>
+</html>

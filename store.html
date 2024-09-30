@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Comments</title>
+</head>
+<body>
+    <form id="commentForm">
+        <div style="display: flex;">
+            <p>Name</p>
+            <input id="name" placeholder="Enter your name" style="margin: 15px; height: 20px;" />
+        </div>
+        <textarea id="comment" placeholder="Enter your comment"></textarea>
+        <button type="button" onclick="storeComment()">Submit</button>
+    </form>
+    
+    <h3>Saved Comments:</h3>
+    <ul id="commentList"></ul>
+
+    <script>
+        // Function to store comment in local storage
+        function storeComment() {
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+
+            if (name && comment) {
+                // Store the name and comment as an object
+                let comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push({ name: name, comment: comment });
+                localStorage.setItem('comments', JSON.stringify(comments));
+
+                displayComments();
+                document.getElementById('name').value = '';
+                document.getElementById('comment').value = ''; // Clear the fields
+            } else {
+                alert('Please enter both name and comment.');
+            }
+        }
+
+        // Function to display saved comments
+        function displayComments() {
+            const commentList = document.getElementById('commentList');
+            commentList.innerHTML = '';  // Clear the current list
+            let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            
+            comments.forEach((entry) => {
+                commentList.innerHTML += `<li><strong>${entry.name}</strong>: ${entry.comment}</li>`;
+            });
+        }
+
+        // Display comments on page load
+        window.onload = function() {
+            displayComments();
+        }
+    </script>
+</body>
+</html>
